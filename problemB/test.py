@@ -2,7 +2,7 @@
 
 import sys
 import copy
-from problem import maxFlow
+from problem import thresh
 
 # print("OPENING FILE")
 
@@ -13,26 +13,27 @@ from problem import maxFlow
 
 
 def loadProblem(path):
+
+    f = open(path, "r")
+    lines = f.readlines()
+
     il = 0
     edges = []
 
     """
         loading buffer data
     """
-    f = open(path, "r")
-    lines = f.readlines()
-
     for line in lines:
         lst = line.split(' ')
         if il == 0:
             nn = int(lst[0])
             ne = int(lst[1])
         else:
-            edges.append([int(lst[0]),int(lst[1])])
+            edge = ( ( int(lst[0]) , int(lst[1]) ) , int(lst[2]) )
+            edges.append(edge)
         il += 1
 
     nodes = list(range(1,nn+1))
-
     return nodes, edges
 
 def loadSol(path):
@@ -45,14 +46,14 @@ ns = 0
 
 print("Running tests : \n")
 
-for i in range(1,9):
+for i in range(1,7):
     infile = "tests/0" + str(i) + ".txt"
     solfile = "checks/0" + str(i) + ".txt"
     nodes, edges = loadProblem(infile)
     sol = loadSol(solfile)
     try:
-        cNP = maxFlow(nodes,edges)
-        if cNP == sol:
+        cost = thresh(nodes,edges)
+        if cost == sol:
             print("    -> Success on test " + str(i))
             ns += 1
         else:

@@ -6,4 +6,4 @@ Done, wrote a simple testing env
 
 ## Problem B : ???
 
-not done
+Simple implementation of Dijstra
