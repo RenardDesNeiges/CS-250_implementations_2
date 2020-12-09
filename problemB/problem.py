@@ -1,7 +1,9 @@
 #!/Library/Frameworks/Python.framework/Versions/3.8/bin/python3.8
 
 import sys
-import copy
+import array
+from heapq import merge 
+from collections import deque
 stdin = sys.stdin
 
 
@@ -9,36 +11,59 @@ def thresh(nodes, edges):
     root = 1
     goal = nodes[-1]
 
-    def succ(n):
+
+    # SUCCESSOR FUNCTION
+    def succ(n,cost):
         s = []
+        
+        def notDiscovered(step,cost):
+            for el in discovered:
+                if el[0] == step[0] and step[1] < cost:
+                    return False
+            return True
+
+        # print(discovered)
         for edge in edges:
-            if edge[0][0] == n and not edge[0][1] in discovered and not edge[0][1] in s:
-                s.append( ( edge[0][1], edge[1]) )
-            if edge[0][1] == n and not edge[0][0] in discovered and not edge[0][0] in s:
-                s.append( ( edge[0][0], edge[1]) )
+            step = (edge[0][1], max(edge[1],cost))
+            if edge[0][0] == n and not ( edge[0][1], edge[1]) in s:
+                s.append( ( edge[0][1], max(edge[1],cost) ) )
+                edges.remove(edge)
+
+            step = (edge[0][0], max(edge[1],cost))
+            if edge[0][1] == n and not ( edge[0][0], edge[1]) in s:
+                s.append( ( edge[0][0], max(edge[1],cost) ) )
+                edges.remove(edge)
         return s
 
-    cost = 0
+
+    # Threshold-Dikjstra of smth idk
     Q = []
-    discovered = [root]
+    discovered = [(root, 0 )]
     Q.append( (root, 0 ) )
     while len(Q)> 0:
-        Q.sort(key = (lambda x : x[1]), reverse=False)
-        # print("Q = " + str(Q))
-        e = Q.pop()
-        v = e[0]
-        cost = e[1]
+        v, cost = Q.pop(0)
+        # getting successors from the node
+        # (this is where this shitty implementation is the shittiest)
+        s = succ(v,cost)
+        # add successors to the queue
+        # print(len(discovered))
+        s.sort(key = (lambda x : x[1]))
+        for e in s:
+            Q.append( e )
+            discovered.append( e )
+
+        # Q = list(merge(Q,s))
+        # discovered = list(merge(discovered,s))
+
+        # Queue sorting
+        Q.sort(key = (lambda x : x[1]) )
+
+        # print("Q = " + str(Q))        
         # print("vertex = " + str(v))
         # print("cost = " + str(cost))
+        
         if v == goal:
             return cost
-        s = succ(v)
-        for e in s:
-            if e[1] > cost:
-                cost = e[1]
-            Q.append( (e[0],cost) )
-            discovered.append(e[0])
-
 
 if not sys.stdin.isatty():
 

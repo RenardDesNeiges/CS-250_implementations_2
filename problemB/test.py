@@ -4,13 +4,6 @@ import sys
 import copy
 from problem import thresh
 
-# print("OPENING FILE")
-
-# f = open("tests/01.txt", "r")
-# lines = f.readlines()
-# for line in lines:
-#     print(line,end="")
-
 
 def loadProblem(path):
 
@@ -61,4 +54,4 @@ for i in range(1,7):
     except:
         print("    -> Program crashed on test " + str(i))
 
-print("\nProgram successful on " + str(ns) +"/8 tests")
+print("\nProgram successful on " + str(ns) +"/6 tests")
