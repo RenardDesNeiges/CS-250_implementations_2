@@ -1,0 +1,21 @@
+#!/usr/local/bin/zsh
+echo  " test number : 1 -> \c"; time pypy3 problem.py < tests/01.txt
+echo  " test number : 2 -> \c"; time pypy3 problem.py < tests/02.txt
+echo  " test number : 3 -> \c"; time pypy3 problem.py < tests/03.txt
+echo  " test number : 4 -> \c"; time pypy3 problem.py < tests/04.txt
+echo  " test number : 5 -> \c"; time pypy3 problem.py < tests/05.txt
+echo  " test number : 6 -> \c"; time pypy3 problem.py < tests/06.txt
+echo  " test number : 7 -> \c"; time pypy3 problem.py < tests/07.txt
+echo  " test number : 8 -> \c"; time pypy3 problem.py < tests/08.txt
+echo  " test number : 9 -> \c"; time pypy3 problem.py < tests/09.txt
+echo  " test number : 10 -> \c"; time pypy3 problem.py < tests/10.txt
+echo  " test number : 11 -> \c"; time pypy3 problem.py < tests/11.txt
+echo  " test number : 12 -> \c"; time pypy3 problem.py < tests/12.txt
+echo  " test number : 13 -> \c"; time pypy3 problem.py < tests/13.txt
+echo  " test number : 14 -> \c"; time pypy3 problem.py < tests/14.txt
+echo  " test number : 15 -> \c"; time pypy3 problem.py < tests/15.txt
+echo  " test number : 16 -> \c"; time pypy3 problem.py < tests/16.txt
+echo  " test number : 17 -> \c"; time pypy3 problem.py < tests/17.txt
+echo  " test number : 18 -> \c"; time pypy3 problem.py < tests/18.txt
+echo  " test number : 19 -> \c"; time pypy3 problem.py < tests/19.txt
+echo  " test number : 20 -> \c"; time pypy3 problem.py < tests/20.txt

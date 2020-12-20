@@ -2,8 +2,8 @@
 
 ## Problem A : Ford Fulkerson
 
-Done, wrote a simple testing env
+Done, wrote a simple testing env, passes all tests
 
-## Problem B : ???
+## Problem B : Dikstraesque
 
-Simple implementation of Dijstra
+Minimum max capacity of path.
