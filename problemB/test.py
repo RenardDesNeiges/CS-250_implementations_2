@@ -22,7 +22,7 @@ def loadProblem(path):
             nn = int(lst[0])
             ne = int(lst[1])
         else:
-            edge = ( ( int(lst[0]) , int(lst[1]) ) , int(lst[2]) )
+            edge = ( int(lst[1]) ) , int(lst[2]) , ( int(lst[0]) )
             edges.append(edge)
         il += 1
 
