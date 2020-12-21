@@ -9,29 +9,40 @@ stdin = sys.stdin
 
 def thresh(aMat,goal):
     root = 1
-
+    # step = 0
     # Threshold-Dikjstra of smth idk, using a heap priority queue and adjacency matrices
-    Q = [ (root, 0 ) ]
+    Q = [ ( 0, root ) ]
     while len(Q)> 0:
 
-        v, cost = hq.heappop(Q)
-        # getting successors from the node
+        # step += 1
+        # print("step="+str(step))
+        # print("Q="+str(Q))
 
-        for key in aMat[v]:
-            if aMat[v][key] != -1:
-                hq.heappush( Q , (key,max(aMat[v][key],cost)) )
-                aMat[v][key] = -1
-                aMat[key][v] = -1
+        # hq.heapify(Q)
+        cost, v = hq.heappop(Q)
+
+        # print("v="+str(v))
+
         
+
         # checking if we reached the goal node
         if v == goal:
             return cost
+
+        # getting successors from the node
+        for key in aMat[v]:
+            if aMat[v][key] != -1:
+                hq.heappush( Q , ( max(aMat[v][key],cost), key ) )
+                aMat[v][key] = -1
+                aMat[key][v] = -1
+        
+        
 
 if not sys.stdin.isatty():
 
     il = 0
     edges = []
-    aMat = defaultdict(dict)
+    aMat = defaultdict(defaultdict)
 
     """
         loading buffer data
