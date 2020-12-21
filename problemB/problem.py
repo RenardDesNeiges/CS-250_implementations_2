@@ -3,61 +3,66 @@
 import sys
 import array
 import heapq as hq
+from collections import defaultdict
 stdin = sys.stdin
 
 
-def thresh(nodes, edges, discovered):
+def thresh(aMat,goal):
     root = 1
-    goal = nodes[-1]
+    # goal = nodes[-1]
+
 
     # SUCCESSOR FUNCTION
-    def succ(n,q,discovered):
+    def succ(n,cost):
         s = []
-        # rmList = []
-        for i in range(len(edges)):
-            step = ( max(edges[i][0],cost), edges[i][1][1] )
-            if edges[i][1][0] == n and not step in q and not discovered[i]:
-                hq.heappush(q,step)
-                # rmList.append( edges[i] )
-                discovered[i] = True
+        
+        # def notDiscovered(step,cost):
+        #     for el in discovered:
+        #         if el[0] == step[0] and step[1] < cost:
+        #             return False
+        #     return True
 
-            else:
-                step = (max(edges[i][0],cost), edges[i][1][0])
-                if edges[i][1][1] == n and not step in q and discovered[i]:
-                    hq.heappush(q,step)
-                    # rmList.append( edges[i] )
-                    discovered[i] = True
+        # print(discovered)
+        # for edge in edges:
+        #     step = (edge[0][1], max(edge[1],cost))
+        #     if edge[0][0] == n and not step in s:
+        #         s.append( step )
+        #         edges.remove( edge )
+        #     else:
+        #         step = (edge[0][0], max(edge[1],cost))
+        #         if edge[0][1] == n and not step in s:
+        #             s.append( step )
+        #             edges.remove( edge )
 
-
-        # for edge in rmList:
-        #     edges.remove( edge )
-        return s    
+        for key in aMat[n]:
+            if aMat[n][key] != -1:
+                s.append( (key,max(aMat[n][key],cost)) )
+                aMat[n][key] = -1
+                aMat[key][n] = -1
+        return s
 
 
     # Threshold-Dikjstra of smth idk
-    Q = [ ( 0, root ) ]
-
-    hq.heapify(Q)
-
-    Q.sort(key = (lambda x : x[0]) )
+    Q = [ (root, 0 ) ]
     while len(Q)> 0:
-        cost, v = hq.heappop(Q)
+        v, cost = Q.pop(0)
         # getting successors from the node
-        s = succ(v,Q,discovered)
+        s = succ(v,cost)
         # add successors to the queue
-        # s.sort(key = (lambda x : x[0]))
-        # for e in s:
-        #     if e not in Q:
-        #         Q.append( e )
-        # Q.sort(key = (lambda x : x[0]) )
-        # print(Q)
-        # print(s)
-        Q = list(hq.merge(Q,s))
+        s.sort(key = (lambda x : x[1]))
+        for e in s:
+            Q.append( e )
 
-        hq.heapify(Q)
+        # Q = list(merge(Q,s))
+        # discovered = list(merge(discovered,s))
 
-        # print(Q)
+        # Queue sorting
+        Q.sort(key = (lambda x : x[1]) )
 
+        # print("Q = " + str(Q))        
+        # print("vertex = " + str(v))
+        # print("cost = " + str(cost))
+        
         if v == goal:
             return cost
 
@@ -65,7 +70,7 @@ if not sys.stdin.isatty():
 
     il = 0
     edges = []
-    discovered= []
+    aMat = defaultdict(dict)
 
     """
         loading buffer data
@@ -76,12 +81,16 @@ if not sys.stdin.isatty():
             nn = int(lst[0])
             ne = int(lst[1])
         else:
-            edge = ( int(lst[2]) , ( int(lst[0]) , int(lst[1]) ) )
-            edges.append(edge)
-            discovered.append(False)
+            # edge = ( ( int(lst[0]) , int(lst[1]) ) , int(lst[2]) )
+            aMat[ int(lst[0]) ][int(lst[1])] = int(lst[2])
+            aMat[ int(lst[1]) ][int(lst[0])] = int(lst[2])
+            # edges.append(edge)
         il += 1
 
-    nodes = list(range(1,nn+1))
-    cost = thresh(nodes,edges,discovered)
-    print(cost)
+    # nodes = list(range(1,nn+1))
+
+    # print(edges)
+
+    cost = thresh(aMat,nn)
+    print(str(cost))
     
