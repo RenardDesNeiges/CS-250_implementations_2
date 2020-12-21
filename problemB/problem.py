@@ -9,14 +9,9 @@ stdin = sys.stdin
 
 def thresh(aMat,goal):
     root = 1
-    # step = 0
     # Threshold-Dikjstra of smth idk, using a heap priority queue and adjacency matrices
     Q = [ ( 0, root ) ]
     while len(Q)> 0:
-
-        # step += 1
-        # print("step="+str(step))
-        # print("Q="+str(Q))
 
         # hq.heapify(Q)
         cost, v = hq.heappop(Q)
